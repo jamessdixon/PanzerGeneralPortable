@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23103.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{FC986A07-60DC-4407-BA5B-826EF8949908}"
+	ProjectSection(SolutionItems) = preProject
+		Data\campaign.json = Data\campaign.json
+		Data\campaignBriefing.json = Data\campaignBriefing.json
+		Data\campaignStep.json = Data\campaignStep.json
+		Data\campaignStepType.json = Data\campaignStepType.json
+		Data\campaignTree.json = Data\campaignTree.json
+		Data\equipment.json = Data\equipment.json
+		Data\equipmentClass.json = Data\equipmentClass.json
+		Data\equipmentGroup.json = Data\equipmentGroup.json
+		Data\equipmentLossCalculationGroup.json = Data\equipmentLossCalculationGroup.json
+		Data\equipmentSubClass.json = Data\equipmentSubClass.json
+		Data\movementCost.json = Data\movementCost.json
+		Data\movementCostModifier.json = Data\movementCostModifier.json
+		Data\movementType.json = Data\movementType.json
+		Data\nation.json = Data\nation.json
+		Data\objectiveType.json = Data\objectiveType.json
+		Data\scenario.json = Data\scenario.json
+		Data\scenarioClassPurchase.json = Data\scenarioClassPurchase.json
+		Data\scenarioNation.json = Data\scenarioNation.json
+		Data\scenarioPrestigeAllotment.json = Data\scenarioPrestigeAllotment.json
+		Data\scenarioSide.json = Data\scenarioSide.json
+		Data\scenarioTile.json = Data\scenarioTile.json
+		Data\scenarioUnit.json = Data\scenarioUnit.json
+		Data\side.json = Data\side.json
+		Data\targetType.json = Data\targetType.json
+		Data\terrain.json = Data\terrain.json
+		Data\terrainCondition.json = Data\terrainCondition.json
+		Data\terrainGroup.json = Data\terrainGroup.json
+		Data\terrainType.json = Data\terrainType.json
+		Data\tileName.json = Data\tileName.json
+		Data\victoryConditionCampaign.json = Data\victoryConditionCampaign.json
+		Data\victoryConditionStandAlone.json = Data\victoryConditionStandAlone.json
+		Data\weatherCondition.json = Data\weatherCondition.json
+		Data\weatherProbability.json = Data\weatherProbability.json
+		Data\weatherZone.json = Data\weatherZone.json
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ChickenSoftware.PanzerGeneralPortable.Core", "ChickenSoftware.PanzerGeneralPortable.Core\ChickenSoftware.PanzerGeneralPortable.Core.fsproj", "{A87A1811-47C6-4290-B1B7-24C36FBE4B64}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A87A1811-47C6-4290-B1B7-24C36FBE4B64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A87A1811-47C6-4290-B1B7-24C36FBE4B64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A87A1811-47C6-4290-B1B7-24C36FBE4B64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A87A1811-47C6-4290-B1B7-24C36FBE4B64}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
