@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataroot>
+<TargetType Id="0" Description="SoftGround"/>
+<TargetType Id="1" Description="HardGround"/>
+<TargetType Id="2" Description="Air"/>
+<TargetType Id="3" Description="Naval"/>
+</dataroot>
