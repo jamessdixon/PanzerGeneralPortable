@@ -267,7 +267,7 @@ let isStatic = function
 | Static -> true 
 | _ -> false
 
-let getTargetType = function
+let (|Ground|Air|Naval|) = function
     | Infantry _  -> Ground Soft
     | Tank -> Ground Hard
     | Recon  -> Ground Soft
@@ -334,13 +334,13 @@ let canCaptureHexes = function
 | _ -> false
      
 let isGroundCombat(equipmentClass: EquipmentClass) =
-    let targetType = getTargetType equipmentClass
-    isGround(targetType) && isCombat(equipmentClass) 
+    isGround(equipmentClass) && isCombat(equipmentClass) 
 
 type Equipment = {
     Id: int;
     Description: string;
     EquipmentClass: EquipmentClass;
+    MovementType: MovementType;
     HardAttack: int;
     SoftAttack: int;
     AirAttack: int;
@@ -353,11 +353,9 @@ type Equipment = {
 
 type Unit = {
     UnitId:int;
-    TargetType: TargetType;
     Equipment: Equipment;
     Experience: int;
     BattleStars: int;
-    MovementType: MovementType;
     Ammo: int;
     Fuel: int;
     Entrenchment: int}

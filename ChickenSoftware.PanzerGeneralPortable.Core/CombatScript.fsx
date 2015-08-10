@@ -32,7 +32,7 @@ let isSurprised() =
 
 let determineAttackGrade(attackingUnit: Unit, defendingUnit: Unit) =
     let attackGrade = 
-        match defendingUnit.TargetType with
+        match defendingUnit.Equipment.EquipmentClass with
         | Ground Soft -> attackingUnit.Equipment.SoftAttack
         | Ground Hard -> attackingUnit.Equipment.HardAttack
         | Air -> attackingUnit.Equipment.AirAttack
@@ -41,13 +41,13 @@ let determineAttackGrade(attackingUnit: Unit, defendingUnit: Unit) =
     let attackGrade' = attackGrade + attackingUnit.BattleStars
 
     let attackGrade'' =
-        match isMotorized(attackingUnit.MovementType), attackingUnit.Fuel = 0 with
+        match isMotorized(attackingUnit.Equipment.MovementType), attackingUnit.Fuel = 0 with
         | true, true -> attackGrade'/2
         | _,_ -> attackGrade'
     attackGrade''
 
 let isRuggedDefense(attackingUnit:Unit, defendingUnit:Unit, random: System.Random) =
-    match  isGround (getTargetType defendingUnit.Equipment.EquipmentClass), isCombat defendingUnit.Equipment.EquipmentClass with
+    match  isGround defendingUnit.Equipment.EquipmentClass, isCombat defendingUnit.Equipment.EquipmentClass with
     | true,true -> 
         let experienceRatio = (defendingUnit.Experience + 2) / (attackingUnit.Experience + 2);
         let entrenchmentRatio = (defendingUnit.Equipment.EntrenchmentRate + 1) / (attackingUnit.Equipment.EntrenchmentRate + 1)
@@ -75,7 +75,7 @@ let determineArtilleryVWetGroundAdjustment(attackingUnit:Unit, tile: Tile) =
        
 let determineDefenseGrade(attackingUnit:Unit, defendingUnit:Unit, tile: Tile) =
     let defenseGrade =
-        match attackingUnit.TargetType with
+        match attackingUnit.Equipment.EquipmentClass with
         | Ground _ -> defendingUnit.Equipment.GroundDefense
         | Air -> defendingUnit.Equipment.AirDefense
         | Naval -> defendingUnit.Equipment.GroundDefense
@@ -102,8 +102,7 @@ let determineExperienceBonusForInitiative(numberOfStars) =
     | _ -> 3
 
 let determineSubmarineAttackAdjustment(attackingUnit:Unit, defendingUnit:Unit) =
-    let defendingTargetType = getTargetType(defendingUnit.Equipment.EquipmentClass)
-    match(isSubmarine(attackingUnit.Equipment.EquipmentClass), isNaval(defendingTargetType)) with
+    match(isSubmarine(attackingUnit.Equipment.EquipmentClass), isNaval(defendingUnit.Equipment.EquipmentClass)) with
     | true, true -> 99
     | _, _ -> 0
 
@@ -113,8 +112,7 @@ let determineTankAttackAntiTankDefenseAdjustment(attackingUnit:Unit, defendingUn
     | _, _ -> 0
 
 let determineAirAttackAirDefenseDefenseAdjustment(attackingUnit:Unit, defendingUnit:Unit) = 
-    let attackingTargetType = getTargetType(attackingUnit.Equipment.EquipmentClass)
-    match isAir(attackingTargetType), isAirAttack(defendingUnit.Equipment.EquipmentClass) with
+    match isAir(attackingUnit.Equipment.EquipmentClass), isAirAttack(defendingUnit.Equipment.EquipmentClass) with
     | true, true -> 99
     | _, _ -> 0
 
