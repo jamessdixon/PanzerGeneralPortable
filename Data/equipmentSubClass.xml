@@ -60,21 +60,18 @@
 <EquipmentSubClassDescription>Submarine</EquipmentSubClassDescription>
 <EquipmentClassId>11</EquipmentClassId>
 </EquipmentSubClass>
-  
 <EquipmentSubClass>
 <EquipmentSubClassId>12</EquipmentSubClassId>
 <EquipmentSubClassDescription>Destroyer</EquipmentSubClassDescription>
 <EquipmentClassId>12</EquipmentClassId>
 </EquipmentSubClass>
-
-  <EquipmentSubClass>
+<EquipmentSubClass>
 <EquipmentSubClassId>13</EquipmentSubClassId>
 <EquipmentSubClassDescription>CapitalShip</EquipmentSubClassDescription>
 <EquipmentClassId>13</EquipmentClassId>
 </EquipmentSubClass>
 <EquipmentSubClass>
-
-  <EquipmentSubClassId>14</EquipmentSubClassId>
+<EquipmentSubClassId>14</EquipmentSubClassId>
 <EquipmentSubClassDescription>AircraftCarrier</EquipmentSubClassDescription>
 <EquipmentClassId>14</EquipmentClassId>
 </EquipmentSubClass>

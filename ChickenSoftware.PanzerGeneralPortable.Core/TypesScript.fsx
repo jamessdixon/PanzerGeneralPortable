@@ -1,6 +1,7 @@
 ﻿module TypesScript
 
 #r "..\packages\FSharp.Data.2.2.5\lib\portable-net40+sl5+wp8+win8\FSharp.Data.dll"
+#r "System.Xml.Linq"
 
 open System.IO
 open FSharp.Data
@@ -11,125 +12,355 @@ let targetDirectory = "../Destination"
 let baseDirectory = __SOURCE_DIRECTORY__
 let baseDirectory' = Directory.GetParent(baseDirectory)
 
-let getJsonData(className:string) =
-    let filePath = @"Data\"+className+".json"
+let getXmlData(className:string) =
+    let filePath = @"Data\"+className+".xml"
     let fullPath = Path.Combine(baseDirectory'.FullName, filePath)
     File.ReadAllText(fullPath)
 
-type Campaign = JsonProvider<"../Data/campaign.Json">
-let campaigns = Campaign.Parse(getJsonData("campaign"))
+type CampaignContext = XmlProvider<"../Data/campaign.xml">
+type Campaign = CampaignContext.Campaign
+let campaigns = CampaignContext.Parse(getXmlData("campaign"))
     
-type CampaignBriefing = JsonProvider<"../Data/campaignBriefing.Json">
-let campaignBriefings = CampaignBriefing.Parse(getJsonData("campaignBriefing"))
+type CampaignBriefingContext = XmlProvider<"../Data/campaignBriefing.xml">
+type CampaignBriefing = CampaignBriefingContext.Briefing
+let campaignBriefings = CampaignBriefingContext.Parse(getXmlData("campaignBriefing"))
 
-type CampaignStep = JsonProvider<"../Data/campaignStep.Json">
-let campaignSteps = CampaignStep.Parse(getJsonData("campaignStep"))
+type CampaignStepContext = XmlProvider<"../Data/campaignStep.xml">
+type CampaignStep = CampaignStepContext.CampaignStep
+let campaignSteps = CampaignStepContext.Parse(getXmlData("campaignStep"))
 
-type CampaignStepType = JsonProvider<"../Data/campaignStepType.Json">
-let campaignStepTypes = Campaign.Parse(getJsonData("campaignStepType"))
+type CampaignStepTypeContext = XmlProvider<"../Data/campaignStepType.xml">
+type CampaignStepType = CampaignStepTypeContext.CampaignStepType
+let campaignStepTypes = CampaignContext.Parse(getXmlData("campaignStepType"))
 
-type CampaignTree = JsonProvider<"../Data/campaignTree.Json">
-let campaignTrees = CampaignTree.Parse(getJsonData("campaignTree"))
+type CampaignTreeContext = XmlProvider<"../Data/campaignTree.xml">
+type CampaginTree = CampaignTreeContext.CampaignTree
+let campaignTrees = CampaignTreeContext.Parse(getXmlData("campaignTree"))
 
-type Equipment = JsonProvider<"../Data/equipment.Json">
-let equipments = Equipment.Parse(getJsonData("equipment"))
+type EquipmentLossCalculationGroupContext = XmlProvider<"../Data/EquipmentLossCalculationGroup.xml">
+type EquipmentLossCalculationGroup = EquipmentLossCalculationGroupContext.EquipmentLossCalculationGroup
+let equipmentLossCalculationGroups = EquipmentLossCalculationGroupContext.Parse(getXmlData("equipmentLossCalculationGroup"))
 
-type EquipmentClass = JsonProvider<"../Data/EquipmentClass.Json">
-let equipmentClasses = EquipmentClass.Parse(getJsonData("equipmentClass"))
+type MovementCostContext = XmlProvider<"../Data/MovementCost.xml">
+type MovementCost = MovementCostContext.MovementCost
+let movementCosts = MovementCostContext.Parse(getXmlData("movementCost"))
 
-type EquipmentGroup = JsonProvider<"../Data/EquipmentGroup.Json">
-let equipmentGroups = EquipmentGroup.Parse(getJsonData("equipmentGroup"))
+type MovementCostModifierContext = XmlProvider<"../Data/MovementCostModifier.xml">
+type MovementCostModifier = MovementCostModifierContext.MovementCostModifier
+let movementCostModifiers = MovementCostModifierContext.Parse(getXmlData("movementCostModifier"))
 
-type EquipmentLossCalculationGroup = JsonProvider<"../Data/EquipmentLossCalculationGroup.Json">
-let equipmentLossCalculationGroups = EquipmentLossCalculationGroup.Parse(getJsonData("equipmentLossCalculationGroup"))
+type NationContext = XmlProvider<"../Data/Nation.xml">
+type Nation = NationContext.Nation
+let nations = NationContext.Parse(getXmlData("nation"))
 
-type EquipmentSubClass = JsonProvider<"../Data/EquipmentSubClass.Json">
-let equipmentSubClasses = EquipmentSubClass.Parse(getJsonData("equipmentSubClass"))
+type ObjectiveTypeContext = XmlProvider<"../Data/ObjectiveType.xml">
+type ObjectiveType = ObjectiveTypeContext.ObjectiveType
+let objectiveTypes = ObjectiveTypeContext.Parse(getXmlData("objectiveType"))
 
-type MovementCost = JsonProvider<"../Data/MovementCost.Json">
-let movementCosts = MovementCost.Parse(getJsonData("movementCost"))
+type ScenarioContext = XmlProvider<"../Data/Scenario.xml">
+type Scenario = ScenarioContext.Scenario
+let scenarios = ScenarioContext.Parse(getXmlData("scenario"))
 
-type MovementCostModifier = JsonProvider<"../Data/MovementCostModifier.Json">
-let movementCostModifiers = MovementCostModifier.Parse(getJsonData("movementCostModifier"))
+type ScenarioClassPurchaseContext = XmlProvider<"../Data/scenarioClassPurchase.xml">
+type ScenarioClassPurchase = ScenarioClassPurchaseContext.ScenarioClassPurchase
+let scenariosClassPurchases = ScenarioClassPurchaseContext.Parse(getXmlData("scenarioClassPurchase"))
 
-type MovementType = JsonProvider<"../Data/MovementType.Json">
-let movementTypes = MovementType.Parse(getJsonData("movementType"))
+type ScenarioNationContext = XmlProvider<"../Data/scenarioNation.xml">
+type ScenarioNation = ScenarioNationContext.ScenarioNation
+let scenariosNations = ScenarioNationContext.Parse(getXmlData("scenarioNation"))
 
-type Nation = JsonProvider<"../Data/Nation.Json">
-let nations = Nation.Parse(getJsonData("nation"))
+type ScenarioPrestigeAllotmentContext = XmlProvider<"../Data/scenarioPrestigeAllotment.xml">
+type ScenarioPrestigeAllotment = ScenarioPrestigeAllotmentContext.ScenarioPrestigeAllotment
+let scenariosPrestigeAllotment = ScenarioPrestigeAllotmentContext.Parse(getXmlData("scenarioPrestigeAllotment"))
 
-type ObjectiveType = JsonProvider<"../Data/ObjectiveType.Json">
-let objectiveTypes = ObjectiveType.Parse(getJsonData("objectiveType"))
+type ScenarioSideContext = XmlProvider<"../Data/scenarioSide.xml">
+type ScenarioSide = ScenarioSideContext.ScenarioSide
+let scenariosSide = ScenarioPrestigeAllotmentContext.Parse(getXmlData("scenarioSide"))
 
-type Scenario = JsonProvider<"../Data/Scenario.Json">
-let scenarios = Scenario.Parse(getJsonData("scenario"))
+type ScenarioTileContext = XmlProvider<"../Data/scenarioTile.xml">
+type ScenarioTile = ScenarioTileContext.ScenarioTile
+let scenarioTiles = ScenarioTileContext.Parse(getXmlData("scenarioTile"))
 
-type ScenarioClassPurchase = JsonProvider<"../Data/scenarioClassPurchase.Json">
-let scenariosClassPurchases = ScenarioClassPurchase.Parse(getJsonData("scenarioClassPurchase"))
+type ScenarioUnitContext = XmlProvider<"../Data/scenarioUnit.xml">
+type ScenarioUnit = ScenarioUnitContext.ScenarioUnit
+let scenarioUnits = ScenarioUnitContext.Parse(getXmlData("scenarioUnit"))
 
-type ScenarioNation = JsonProvider<"../Data/scenarioNation.Json">
-let scenariosNations = ScenarioNation.Parse(getJsonData("scenarioNation"))
+type SideContext = XmlProvider<"../Data/side.xml">
+type Side = SideContext.Side
+let sides = SideContext.Parse(getXmlData("side"))
 
-type ScenarioPrestigeAllotment = JsonProvider<"../Data/scenarioPrestigeAllotment.Json">
-let scenariosPrestigeAllotment = ScenarioPrestigeAllotment.Parse(getJsonData("scenarioPrestigeAllotment"))
+type TerrainContext = XmlProvider<"../Data/terrain.xml">
+type Terrain = TerrainContext.Terrain
+let terrains = TerrainContext.Parse(getXmlData("terrain"))
 
-type ScenarioSide = JsonProvider<"../Data/scenarioSide.Json">
-let scenariosSide = ScenarioPrestigeAllotment.Parse(getJsonData("scenarioSide"))
+type TerrainGroupContext = XmlProvider<"../Data/terrainGroup.xml">
+type TerrainGroup = TerrainGroupContext.TerrainGroup
+let terrainGroups = TerrainGroupContext.Parse(getXmlData("terrainGroup"))
 
-type ScenarioTile = JsonProvider<"../Data/scenarioTile.Json">
-let scenarioTiles = ScenarioTile.Parse(getJsonData("scenarioTile"))
+type TileNameContext = XmlProvider<"../Data/tileName.xml">
+type TileName = TileNameContext.TileName
+let tileNames = TileNameContext.Parse(getXmlData("tileName"))
 
-type ScenarioUnit = JsonProvider<"../Data/scenarioUnit.Json">
-let scenarioUnits = ScenarioUnit.Parse(getJsonData("scenarioUnit"))
+type VictoryConditionCampaignContext = XmlProvider<"../Data/victoryConditionCampaign.xml">
+type VictoryConditionCampaign = VictoryConditionCampaignContext.VictoryConditionCampaign
+let victoryConditionCampaign = VictoryConditionCampaignContext.Parse(getXmlData("victoryConditionCampaign"))
 
-type Side = JsonProvider<"../Data/side.Json">
-let sides = Side.Parse(getJsonData("side"))
+type VictoryConditionStandAloneContext = XmlProvider<"../Data/victoryConditionStandAlone.xml">
+type VictoryConditionStandAlone = VictoryConditionStandAloneContext.VictoryConditionStandAlone
+let victoryConditionStandAlone = VictoryConditionStandAloneContext.Parse(getXmlData("victoryConditionStandAlone"))
 
-type TargetType = JsonProvider<"../Data/targetType.Json">
-let targetTypes = TargetType.Parse(getJsonData("targetType"))
+type WeatherContext = XmlProvider<"../Data/weather.xml">
+type Weather = WeatherContext.Weather
+let weatherConditions = WeatherContext.Parse(getXmlData("weather"))
 
-type Terrain = JsonProvider<"../Data/terrain.Json">
-let terrains = Terrain.Parse(getJsonData("terrain"))
+type WeatherProbabilityContext = XmlProvider<"../Data/weatherProbability.xml">
+type WeatherProbability = WeatherProbabilityContext.WeatherProbability
+let weatherProbabilities = WeatherProbabilityContext.Parse(getXmlData("weatherProbability"))
 
-type TerrainCondition = JsonProvider<"../Data/terrainCondition.Json">
-let terrainConditions = TerrainCondition.Parse(getJsonData("terrainCondition"))
+type WeatherZoneContext = XmlProvider<"../Data/weatherzone.xml">
+type WeatherZone = WeatherZoneContext.WeatherZone
+let weatherZones = WeatherZoneContext.Parse(getXmlData("weatherZone"))
 
-type TerrainGroup = JsonProvider<"../Data/terrainGroup.Json">
-let terrainGroups = TerrainGroup.Parse(getJsonData("terrainGroup"))
+type TerrainType =
+| Ocean
+| Port
+| Rough
+| Mountain
+| City
+| Clear
+| Forest
+| Swamp
+| Airfield
+| Fortification
+| Bocage
+| Desert
+| RoughDesert
+| Escarpment
 
-type TerrainType = JsonProvider<"../Data/terrainType.Json">
-let terrainTypes = TerrainType.Parse(getJsonData("terrainType"))
+let getTerrainTypeInititaiveCap = function
+| City -> 1
+| Forest | Fortification | Bocage-> 3
+| Swamp -> 4
+| Port | Rough | RoughDesert -> 5
+| Mountain | Escarpment -> 8
+| _ -> 99
 
-type TileName = JsonProvider<"../Data/tileName.Json">
-let tileNames = TileName.Parse(getJsonData("tileName"))
+type Condition =
+| Dry
+| Muddy
+| Frozen
 
-type VictoryConditionCampaign = JsonProvider<"../Data/victoryConditionCampaign.Json">
-let victoryConditionCampaign = VictoryConditionCampaign.Parse(getJsonData("victoryConditionCampaign"))
+let isDry = function 
+| Dry -> true 
+| _ -> false
 
-type VictoryConditionStandAlone = JsonProvider<"../Data/victoryConditionStandAlone.Json">
-let victoryConditionStandAlone = VictoryConditionStandAlone.Parse(getJsonData("victoryConditionStandAlone"))
-
-type WeatherCondition = JsonProvider<"../Data/weatherCondition.Json">
-let weatherConditions = WeatherCondition.Parse(getJsonData("weatherCondition"))
-
-type WeatherProbability = JsonProvider<"../Data/weatherProbability.Json">
-let weatherProbabilities = WeatherProbability.Parse(getJsonData("weatherProbability"))
-
-type WeatherZone = JsonProvider<"../Data/weatherzone.Json">
-let weatherZones = WeatherZone.Parse(getJsonData("weatherZone"))
-
-type GroundType =
-| SoftGround
-| HardGround
-| Air
-| Sea
+let isNotDry = function 
+| Dry -> false 
+| _ -> true
 
 type Tile = {
-    TileId:int; tileName: string;
-    ColumnNumber: int; rowNumber: int; 
-    Terrain: Terrain; GroundType: GroundType;
-    VictoryInd: bool; SupplyInd: bool;
+    TileId:int; TileName: string;
+    ColumnNumber: int; RowNumber: int; 
+    Terrain: Terrain; Condition: Condition;
+    VictoryInd: bool;  SupplyInd: bool; 
     DeployInd: bool; MovementCost: int}
+
+type GroundTarget =
+| Soft
+| Hard
+
+type TargetType =
+| Ground of GroundTarget
+| Air
+| Naval
+
+type MovementType =
+| Tracked
+| HalfTracked
+| Wheeled
+| Walk
+| None
+| Airborne
+| Water
+| AllTerrain
+
+let (|Motorized|UnMotorized|) =
+    function
+    | Tracked | HalfTracked | Wheeled | Airborne | Water | AllTerrain -> Motorized
+    | Walk | None -> UnMotorized
+
+let isMotorized = function 
+| Motorized -> true 
+| UnMotorized -> false
+
+type Infantry =
+| Basic
+| Engineer
+| Pioniere
+| Airborne
+| Ranger
+| Bridging
+
+let isParadroppable = function 
+| Airborne | Ranger -> true 
+| _ -> false
+
+type Emplacement = 
+| Fort
+| Strongpoint
+
+type Bomber =
+| Tactical
+| Strategic
+
+type Fighter =
+| Prop
+| Jet 
+
+type CombatShip =
+| Submarine
+| Destroyer
+| CapitalShip
+
+type Cannon =
+| TowedLight
+| TowedHeavy
+| SelfPropelled
+
+type AirAttack =
+| AirDefense of Cannon
+| AntiAir
+
+type Transport =
+| GroundTransport
+| AirTransport
+| SeaTransport
+| AircraftCarrier
+
+type EquipmentClass =
+| Infantry of Infantry
+| Tank
+| Recon
+| Artillery of Cannon
+| Antitank of Cannon
+| AirAttack of AirAttack
+| Emplacement of Emplacement
+| Fighter of Fighter
+| Bomber of Bomber
+| CombatShip of CombatShip
+| Transport of Transport
+
+let (|Towed|SelfPropelled|Static|) = function
+    | Artillery TowedLight | Artillery TowedHeavy | Antitank TowedLight | Antitank TowedHeavy | AirAttack(AirDefense TowedHeavy) | AirAttack(AirDefense TowedLight) -> Towed
+    | Emplacement _ -> Static
+    | _ -> SelfPropelled
+
+let isTowed = function 
+| Towed -> true 
+| _ -> false
+
+let isSelfPropelled = function 
+| SelfPropelled -> true 
+| _ -> false
+
+let isStatic = function 
+| Static -> true 
+| _ -> false
+
+let getTargetType = function
+    | Infantry _  -> Ground Soft
+    | Tank -> Ground Hard
+    | Recon  -> Ground Soft
+    | Artillery _ -> Ground Soft
+    | Antitank TowedLight -> Ground Soft 
+    | Antitank TowedHeavy -> Ground Soft 
+    | Antitank _ -> Ground Hard 
+    | AirAttack _ -> Ground Soft
+    | Emplacement _ -> Ground Soft
+    | Transport GroundTransport -> Ground Soft
+    | Fighter _ -> Air
+    | Bomber _ -> Air
+    | Transport AirTransport -> Air
+    | CombatShip _ -> Naval
+    | Transport SeaTransport -> Naval
+    | Transport AircraftCarrier -> Naval
+
+let isInfantry = function
+| Infantry _  -> true
+| _ -> false
+
+let isArtillery = function
+| Artillery _ -> true
+| _ -> false
+
+let isTank = function
+| Tank _ -> true
+| _ -> false
+
+let isAntitank = function
+| Antitank _ -> true
+| _ -> false
+
+let isAirAttack = function
+| AirAttack _ -> true
+| _ -> false
+
+let isSubmarine = function
+| CombatShip Submarine -> true
+| _ -> false
+
+let isNaval = function
+| Naval -> true
+| _ -> false
+
+let isGround = function 
+| Ground _ -> true 
+| _ -> false
+
+let isAir = function 
+| Air -> true 
+| _ -> false
+
+let isTransport = function
+| Transport _  -> true
+| _ -> false
+
+let isCombat = function
+| Transport _  -> false
+| _ -> false
+
+let canCaptureHexes = function
+| Infantry _ | Tank | Recon | Antitank _ -> true
+| _ -> false
+     
+let isGroundCombat(equipmentClass: EquipmentClass) =
+    let targetType = getTargetType equipmentClass
+    isGround(targetType) && isCombat(equipmentClass) 
+
+type Equipment = {
+    Id: int;
+    Description: string;
+    EquipmentClass: EquipmentClass;
+    HardAttack: int;
+    SoftAttack: int;
+    AirAttack: int;
+    NavalAttack: int;
+    EntrenchmentRate: int;
+    GroundDefense: int;
+    AirDefense: int;
+    IgnoreEntrenchment: bool;
+    Initative: int}
+
+type Unit = {
+    UnitId:int;
+    TargetType: TargetType;
+    Equipment: Equipment;
+    Experience: int;
+    BattleStars: int;
+    MovementType: MovementType;
+    Ammo: int;
+    Fuel: int;
+    Entrenchment: int}
 
 type Initative =
 | AttackerStrikesFirst
@@ -137,11 +368,9 @@ type Initative =
 | Simultanous
 
 type BattleInput = {
-    AggressorTile: Tile; 
-    ProtectorTile: Tile; 
+    Tile: Tile; 
     AggressorUnit: Unit; 
-    ProtectorUnit: Unit; 
-    TerrainCondition: TerrainCondition}
+    ProtectorUnit: Unit}
 
 type BattleOutcome =
 | AggressorHolds_ProtectorHolds
@@ -155,4 +384,3 @@ type VolleyOutcome =
 | AttackerHurt_DefenderHurt
 | AttackerUnhurt_DefenderUnhurt
 | AttackerUnhurt_DefenderHurt
-

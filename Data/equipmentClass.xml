@@ -104,15 +104,15 @@
 <EquipmentLossCalculationGroupId>1</EquipmentLossCalculationGroupId>
 <CanCaptureHexes>0</CanCaptureHexes>
 </EquipmentClass>
-  <EquipmentClass>
-    <EquipmentClassId>13</EquipmentClassId>
-    <EquipmentClassDescription>CapitalShip</EquipmentClassDescription>
-    <EquipmentGroupId>2</EquipmentGroupId>
-    <EntrenchmentRate>0</EntrenchmentRate>
-    <EquipmentLossCalculationGroupId>1</EquipmentLossCalculationGroupId>
-    <CanCaptureHexes>0</CanCaptureHexes>
-  </EquipmentClass>
-  <EquipmentClass>
+<EquipmentClass>
+<EquipmentClassId>13</EquipmentClassId>
+<EquipmentClassDescription>CapitalShip</EquipmentClassDescription>
+<EquipmentGroupId>2</EquipmentGroupId>
+<EntrenchmentRate>0</EntrenchmentRate>
+<EquipmentLossCalculationGroupId>1</EquipmentLossCalculationGroupId>
+<CanCaptureHexes>0</CanCaptureHexes>
+</EquipmentClass>
+<EquipmentClass>
 <EquipmentClassId>14</EquipmentClassId>
 <EquipmentClassDescription>AircraftCarrier</EquipmentClassDescription>
 <EquipmentGroupId>2</EquipmentGroupId>
