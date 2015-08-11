@@ -138,28 +138,42 @@ let (|Neutral|Axis|Allied|) =
     | AlliedForces | France | Greece | UnitedStates | Norway | Poland | SovietUnion | GreatBritain -> Allied
     | Bulgaria | German | Hungray | Italy | Romania | Yugoslavia -> Axis
 
+let getNation(id:int) =
+    match id with
+    | -1 -> None
+    | 2 -> AlliedForces
+    | 3 -> Bulgaria
+    | 7 -> France
+    | 8 -> German
+    | 9 -> Greece
+    | 10 -> UnitedStates
+    | 11 -> Hungray
+    | 13 -> Italy
+    | 15 -> Norway
+    | 16 -> Poland
+    | 18 -> Romania
+    | 20 -> SovietUnion
+    | 23 -> GreatBritain
+    | 24 -> Yugoslavia
+    | _ -> None
 
-
-//let (| None| AlliedForces| Bulgaria| France | German | Greece | UnitedStates | Hungray | Italy| Norway | Poland| Romania| SovietUnion | GreatBrit| Yugoslavia |) =
-//    function
-//    | None -> -1,0,0
-//    | AlliedForces -> 
-//    | Bulgaria ->
-//    | France ->
-//    | German ->
-//    | Greece ->
-//    | UnitedStates -> 
-//    | Hungray ->
-//    | Italy ->
-//    | Norway ->
-//    | Poland ->
-//    | Romania ->
-//    | SovietUnion -> 
-//    | GreatBritain ->
-//    | Yugoslavia ->
-
-
-
+let getNationImageCoordinates(nation:Nation) =
+    match nation with
+    | None -> 0,0
+    | AlliedForces -> 60,0
+    | Bulgaria -> 120,0
+    | France -> 360,0
+    | German -> 420,0
+    | Greece -> 480,0
+    | UnitedStates -> 540,0
+    | Hungray -> 600,0
+    | Italy -> 720,0
+    | Norway -> 840,0
+    | Poland -> 900,0
+    | Romania -> 1020,0
+    | SovietUnion -> 1140,0
+    | GreatBritain -> 1320,0
+    | Yugoslavia -> 1380,0
 
 
 type TerrainType =
