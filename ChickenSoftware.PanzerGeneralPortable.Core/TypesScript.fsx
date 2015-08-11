@@ -29,17 +29,9 @@ type CampaignStepContext = XmlProvider<"../Data/campaignStep.xml">
 type CampaignStep = CampaignStepContext.CampaignStep
 let campaignSteps = CampaignStepContext.Parse(getXmlData("campaignStep"))
 
-type CampaignStepTypeContext = XmlProvider<"../Data/campaignStepType.xml">
-type CampaignStepType = CampaignStepTypeContext.CampaignStepType
-let campaignStepTypes = CampaignContext.Parse(getXmlData("campaignStepType"))
-
 type CampaignTreeContext = XmlProvider<"../Data/campaignTree.xml">
 type CampaginTree = CampaignTreeContext.CampaignTree
 let campaignTrees = CampaignTreeContext.Parse(getXmlData("campaignTree"))
-
-type EquipmentLossCalculationGroupContext = XmlProvider<"../Data/EquipmentLossCalculationGroup.xml">
-type EquipmentLossCalculationGroup = EquipmentLossCalculationGroupContext.EquipmentLossCalculationGroup
-let equipmentLossCalculationGroups = EquipmentLossCalculationGroupContext.Parse(getXmlData("equipmentLossCalculationGroup"))
 
 type MovementCostContext = XmlProvider<"../Data/MovementCost.xml">
 type MovementCost = MovementCostContext.MovementCost
@@ -48,10 +40,6 @@ let movementCosts = MovementCostContext.Parse(getXmlData("movementCost"))
 type MovementCostModifierContext = XmlProvider<"../Data/MovementCostModifier.xml">
 type MovementCostModifier = MovementCostModifierContext.MovementCostModifier
 let movementCostModifiers = MovementCostModifierContext.Parse(getXmlData("movementCostModifier"))
-
-type ObjectiveTypeContext = XmlProvider<"../Data/ObjectiveType.xml">
-type ObjectiveType = ObjectiveTypeContext.ObjectiveType
-let objectiveTypes = ObjectiveTypeContext.Parse(getXmlData("objectiveType"))
 
 type ScenarioContext = XmlProvider<"../Data/Scenario.xml">
 type Scenario = ScenarioContext.Scenario
@@ -85,10 +73,6 @@ type TerrainContext = XmlProvider<"../Data/terrain.xml">
 type Terrain = TerrainContext.Terrain
 let terrains = TerrainContext.Parse(getXmlData("terrain"))
 
-type TerrainGroupContext = XmlProvider<"../Data/terrainGroup.xml">
-type TerrainGroup = TerrainGroupContext.TerrainGroup
-let terrainGroups = TerrainGroupContext.Parse(getXmlData("terrainGroup"))
-
 type TileNameContext = XmlProvider<"../Data/tileName.xml">
 type TileName = TileNameContext.TileName
 let tileNames = TileNameContext.Parse(getXmlData("tileName"))
@@ -105,6 +89,15 @@ type WeatherProbabilityContext = XmlProvider<"../Data/weatherProbability.xml">
 type WeatherProbability = WeatherProbabilityContext.WeatherProbability
 let weatherProbabilities = WeatherProbabilityContext.Parse(getXmlData("weatherProbability"))
 
+type CampaignStepType =
+| MajorVictory
+| MinorVictory
+| Loss
+
+type ObjectiveType =
+| AxisAttack
+| AxisDefend
+
 type WeatherCondition =
 | Fair
 | Cloudy
@@ -116,7 +109,6 @@ type WeatherZone =
 | Mediterrian
 | WesternEurope
 | EasternEurope
-
 
 type Side =
 | Axis
