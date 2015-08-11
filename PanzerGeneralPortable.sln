@@ -29,9 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{FC986A07-6
 		Data\tileName.xml = Data\tileName.xml
 		Data\victoryConditionCampaign.xml = Data\victoryConditionCampaign.xml
 		Data\victoryConditionStandAlone.xml = Data\victoryConditionStandAlone.xml
-		Data\weather.xml = Data\weather.xml
 		Data\weatherProbability.xml = Data\weatherProbability.xml
-		Data\weatherZone.xml = Data\weatherZone.xml
 	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ChickenSoftware.PanzerGeneralPortable.Core", "ChickenSoftware.PanzerGeneralPortable.Core\ChickenSoftware.PanzerGeneralPortable.Core.fsproj", "{A87A1811-47C6-4290-B1B7-24C36FBE4B64}"

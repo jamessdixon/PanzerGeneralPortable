@@ -101,17 +101,22 @@ type VictoryConditionStandAloneContext = XmlProvider<"../Data/victoryConditionSt
 type VictoryConditionStandAlone = VictoryConditionStandAloneContext.VictoryConditionStandAlone
 let victoryConditionStandAlone = VictoryConditionStandAloneContext.Parse(getXmlData("victoryConditionStandAlone"))
 
-type WeatherContext = XmlProvider<"../Data/weather.xml">
-type Weather = WeatherContext.Weather
-let weatherConditions = WeatherContext.Parse(getXmlData("weather"))
-
 type WeatherProbabilityContext = XmlProvider<"../Data/weatherProbability.xml">
 type WeatherProbability = WeatherProbabilityContext.WeatherProbability
 let weatherProbabilities = WeatherProbabilityContext.Parse(getXmlData("weatherProbability"))
 
-type WeatherZoneContext = XmlProvider<"../Data/weatherzone.xml">
-type WeatherZone = WeatherZoneContext.WeatherZone
-let weatherZones = WeatherZoneContext.Parse(getXmlData("weatherZone"))
+type WeatherCondition =
+| Fair
+| Cloudy
+| Rain
+| Snow
+
+type WeatherZone =
+| Desert
+| Mediterrian
+| WesternEurope
+| EasternEurope
+
 
 type Side =
 | Axis
