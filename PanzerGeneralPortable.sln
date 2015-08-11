@@ -24,7 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{FC986A07-6
 		Data\scenarioSide.xml = Data\scenarioSide.xml
 		Data\scenarioTile.xml = Data\scenarioTile.xml
 		Data\scenarioUnit.xml = Data\scenarioUnit.xml
-		Data\side.xml = Data\side.xml
 		Data\terrain.xml = Data\terrain.xml
 		Data\terrainGroup.xml = Data\terrainGroup.xml
 		Data\tileName.xml = Data\tileName.xml

@@ -49,10 +49,6 @@ type MovementCostModifierContext = XmlProvider<"../Data/MovementCostModifier.xml
 type MovementCostModifier = MovementCostModifierContext.MovementCostModifier
 let movementCostModifiers = MovementCostModifierContext.Parse(getXmlData("movementCostModifier"))
 
-type NationContext = XmlProvider<"../Data/Nation.xml">
-type Nation = NationContext.Nation
-let nations = NationContext.Parse(getXmlData("nation"))
-
 type ObjectiveTypeContext = XmlProvider<"../Data/ObjectiveType.xml">
 type ObjectiveType = ObjectiveTypeContext.ObjectiveType
 let objectiveTypes = ObjectiveTypeContext.Parse(getXmlData("objectiveType"))
@@ -85,10 +81,6 @@ type ScenarioUnitContext = XmlProvider<"../Data/scenarioUnit.xml">
 type ScenarioUnit = ScenarioUnitContext.ScenarioUnit
 let scenarioUnits = ScenarioUnitContext.Parse(getXmlData("scenarioUnit"))
 
-type SideContext = XmlProvider<"../Data/side.xml">
-type Side = SideContext.Side
-let sides = SideContext.Parse(getXmlData("side"))
-
 type TerrainContext = XmlProvider<"../Data/terrain.xml">
 type Terrain = TerrainContext.Terrain
 let terrains = TerrainContext.Parse(getXmlData("terrain"))
@@ -120,6 +112,58 @@ let weatherProbabilities = WeatherProbabilityContext.Parse(getXmlData("weatherPr
 type WeatherZoneContext = XmlProvider<"../Data/weatherzone.xml">
 type WeatherZone = WeatherZoneContext.WeatherZone
 let weatherZones = WeatherZoneContext.Parse(getXmlData("weatherZone"))
+
+type Side =
+| Axis
+| Allied
+| Neutral
+
+type Nation =
+| None
+| AlliedForces
+| Bulgaria
+| France 
+| German 
+| Greece 
+| UnitedStates 
+| Hungray 
+| Italy
+| Norway 
+| Poland
+| Romania
+| SovietUnion 
+| GreatBritain
+| Yugoslavia 
+
+let (|Neutral|Axis|Allied|) =
+    function
+    | None -> Neutral
+    | AlliedForces | France | Greece | UnitedStates | Norway | Poland | SovietUnion | GreatBritain -> Allied
+    | Bulgaria | German | Hungray | Italy | Romania | Yugoslavia -> Axis
+
+
+
+//let (| None| AlliedForces| Bulgaria| France | German | Greece | UnitedStates | Hungray | Italy| Norway | Poland| Romania| SovietUnion | GreatBrit| Yugoslavia |) =
+//    function
+//    | None -> -1,0,0
+//    | AlliedForces -> 
+//    | Bulgaria ->
+//    | France ->
+//    | German ->
+//    | Greece ->
+//    | UnitedStates -> 
+//    | Hungray ->
+//    | Italy ->
+//    | Norway ->
+//    | Poland ->
+//    | Romania ->
+//    | SovietUnion -> 
+//    | GreatBritain ->
+//    | Yugoslavia ->
+
+
+
+
 
 type TerrainType =
 | Ocean
@@ -160,6 +204,7 @@ let isNotDry = function
 
 type Tile = {
     TileId:int; TileName: string;
+    Nation: Nation;
     ColumnNumber: int; RowNumber: int; 
     Terrain: Terrain; Condition: Condition;
     VictoryInd: bool;  SupplyInd: bool; 
@@ -353,12 +398,16 @@ type Equipment = {
 
 type Unit = {
     UnitId:int;
+    Nation: Nation;
     Equipment: Equipment;
     Experience: int;
     BattleStars: int;
     Ammo: int;
     Fuel: int;
-    Entrenchment: int}
+    Entrenchment: int;
+    HitPoints: int;
+    AttackPoints: int;
+    IsSupressed: bool}
 
 type Initative =
 | AttackerStrikesFirst

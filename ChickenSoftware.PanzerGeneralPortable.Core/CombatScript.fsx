@@ -6,30 +6,6 @@ open TypesScript
 let isSurprised() =
     false
 
-//CalculateBattle
-//CalculateSurprise
-//DetermineSupportingVolleyUnit
-
-//CalculateSupportBattle
-//DetermineSupportingVolleyTile
-//DetermineAttackPoints
-//CalculateVolly
-//CalculateInitative
-//DetermineSupportingBattleResult
-
-//CalculateMainBattle
-//CalculateInitative
-//DetermineAttackPoints
-//CalculateVolly
-
-//DetermineMainBattleResult
-
-//supportingUnitVolly
-//Vollies
-
-//Volly
-
-
 let determineAttackGrade(attackingUnit: Unit, defendingUnit: Unit) =
     let attackGrade = 
         match defendingUnit.Equipment.EquipmentClass with
@@ -57,14 +33,16 @@ let isRuggedDefense(attackingUnit:Unit, defendingUnit:Unit, random: System.Rando
     | _ -> false
 
 let determineEntrenchmentAmount(attackingUnit:Unit, defendingUnit:Unit) =
-    match attackingUnit.Equipment.IgnoreEntrenchment, isGroundCombat(defendingUnit.Equipment.EquipmentClass), isInfantry(attackingUnit.Equipment.EquipmentClass) with
+    match attackingUnit.Equipment.IgnoreEntrenchment, 
+        isGroundCombat(defendingUnit.Equipment.EquipmentClass), 
+        isInfantry(attackingUnit.Equipment.EquipmentClass) with
     | true,_,_ -> 0
     | false, false, _ -> 0
     | false, true, true -> int(float defendingUnit.Entrenchment * 0.5)
     | false, true, false -> defendingUnit.Entrenchment
 
 let determineGroundVNavalAdjustment(attackingUnit:Unit, defendingUnit:Unit) =
-    match isGroundCombat(attackingUnit.Equipment.EquipmentClass), isNaval(getTargetType(defendingUnit.Equipment.EquipmentClass)) with
+    match isGroundCombat(attackingUnit.Equipment.EquipmentClass), isNaval(defendingUnit.Equipment.EquipmentClass) with
     | true,true -> 8
     | _,_ -> 0
 
@@ -131,7 +109,7 @@ let calculateDefendingInitiative(attackingUnit:Unit, defendingUnit:Unit, terrain
                                     + determineAirAttackAirDefenseDefenseAdjustment(attackingUnit, defendingUnit)
                                     + random.Next(3)
 
-let CalculateInitiative(attackingUnit:Unit, defendingUnit:Unit, terrainType: TerrainType, surprised:bool, random: System.Random) =
+let calculateInitiative(attackingUnit:Unit, defendingUnit:Unit, terrainType: TerrainType, surprised:bool, random: System.Random) =
     let ai = calculateAttackingInitiative(attackingUnit, defendingUnit, terrainType, random)
     let di = calculateDefendingInitiative(attackingUnit, defendingUnit, terrainType, random)
 
@@ -144,16 +122,42 @@ let CalculateInitiative(attackingUnit:Unit, defendingUnit:Unit, terrainType: Ter
         | (_,_) -> Simultanous
 
 
+let determineVolleyEffect(attackingUnit:Unit, defendingUnit:Unit, rollResult: int) =
+    let attackingUnit' = {attackingUnit with Experience =  attackingUnit.Experience + 1; Ammo = attackingUnit.Ammo - 1; AttackPoints = attackingUnit.AttackPoints - 1}
+    let defendingUnit' = match rollResult with
+                                | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 -> {defendingUnit with Experience =  defendingUnit.Experience + 1; Ammo = defendingUnit.Ammo - 1;Entrenchment = defendingUnit.Entrenchment - 1; HitPoints = defendingUnit.HitPoints - 1}
+                                | 11 | 12 -> {defendingUnit with Experience =  defendingUnit.Experience + 1; Ammo = defendingUnit.Ammo - 1; Entrenchment = defendingUnit.Entrenchment - 1}
+                                | _ -> {defendingUnit with Experience =  defendingUnit.Experience + 1; Ammo = defendingUnit.Ammo - 1}
+    attackingUnit', defendingUnit'
+
+let determineVollyResults(attackingUnit:Unit, defendingUnit:Unit, netGrade: int, roll: int) =
+    let roll' = 
+        match netGrade with
+        | 0| 1 | 2 | 3 | 4 -> roll + netGrade
+        | _ -> roll + 4 + ((2/5) * (netGrade-4))
+    determineVolleyEffect(attackingUnit, defendingUnit,roll')
+
+let rec determineVolly(vollyCount:int, attackingUnit:Unit, defendingUnit:Unit, random: System.Random) =
+    match vollyCount, defendingUnit.HitPoints <=0 with
+    | 0, _ -> attackingUnit, defendingUnit
+    | _, true -> attackingUnit, defendingUnit
+    | _, false -> determineVolly(vollyCount, attackingUnit, defendingUnit, random)
+
+
+
+let determineAttackPointsForVolley(unit: Unit) =
+    match isCombat(unit.Equipment.EquipmentClass), unit.IsSupressed  with
+    | true, false -> unit.HitPoints
+    | true, true -> 0
+    | false, _ -> 0
+
+
 //AttackerGrade
 //DefenderGrade
 //Rugged Defense
 //NumberOfVollies: Attack - Defense
-
 //DetemineVollyResults
-//DetermineStandardEquipmentVolleyEffect (add experience and adjustHitPoints
-//DetermineSpecialEquipmentVolleyEffect
 
-//A volly is done for each of the attacker's volly points
 
 
 let doesDefenderRetreat(protectorBaseStrength, protectorStrength) =
