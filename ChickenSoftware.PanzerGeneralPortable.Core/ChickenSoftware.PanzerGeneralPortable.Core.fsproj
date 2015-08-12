@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <None Include="TypesScript.fsx" />
+    <None Include="UnitScript.fsx" />
     <None Include="CombatScript.fsx" />
     <Content Include="packages.config" />
     <Content Include="app.config" />

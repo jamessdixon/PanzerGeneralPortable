@@ -1,4 +1,4 @@
-﻿module TypesScript
+﻿module TypeScript
 
 #r "..\packages\FSharp.Data.2.2.5\lib\portable-net40+sl5+wp8+win8\FSharp.Data.dll"
 #r "System.Xml.Linq"
@@ -393,7 +393,7 @@ let isGroundCombat(equipmentClass: EquipmentClass) =
     isGround(equipmentClass) && isCombat(equipmentClass) 
 
 type Equipment = {
-    Id: int;
+    EquipmentId: int;
     Description: string;
     EquipmentClass: EquipmentClass;
     MovementType: MovementType;

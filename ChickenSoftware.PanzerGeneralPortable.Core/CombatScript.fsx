@@ -1,7 +1,9 @@
-﻿
-#load "TypesScript.fsx"
+﻿module CombatScript
 
-open TypesScript
+#load "TypesScript.fsx"
+#load "UnitScript.fsx"
+open TypeScript
+open UnitScript
 
 let isSurprised() =
     false
@@ -21,6 +23,10 @@ let determineAttackGrade(attackingUnit: Unit, defendingUnit: Unit) =
         | true, true -> attackGrade'/2
         | _,_ -> attackGrade'
     attackGrade''
+
+let attackingUnit = getUnit(1)
+let defendingUnit = getUnit(1)
+determineAttackGrade(attackingUnit, defendingUnit)
 
 let isRuggedDefense(attackingUnit:Unit, defendingUnit:Unit, random: System.Random) =
     match  isGround defendingUnit.Equipment.EquipmentClass, isCombat defendingUnit.Equipment.EquipmentClass with
@@ -143,21 +149,17 @@ let rec determineVolly(vollyCount:int, attackingUnit:Unit, defendingUnit:Unit, r
     | _, true -> attackingUnit, defendingUnit
     | _, false -> determineVolly(vollyCount, attackingUnit, defendingUnit, random)
 
-
-
 let determineAttackPointsForVolley(unit: Unit) =
     match isCombat(unit.Equipment.EquipmentClass), unit.IsSupressed  with
     | true, false -> unit.HitPoints
     | true, true -> 0
     | false, _ -> 0
 
-
-//AttackerGrade
-//DefenderGrade
-//Rugged Defense
-//NumberOfVollies: Attack - Defense
-//DetemineVollyResults
-
+let calculateVolly (attackingUnit:Unit, defendingUnit:Unit, tile:Tile, random:System.Random) =
+    let attackerAttackGrade = determineAttackGrade(attackingUnit, defendingUnit)
+    let defenderAttackGrade = determineDefenseGrade(attackingUnit, defendingUnit, tile)
+    let netAttackGrade = attackerAttackGrade - defenderAttackGrade
+    determineVolly(attackingUnit.AttackPoints,attackingUnit,defendingUnit,random)
 
 
 let doesDefenderRetreat(protectorBaseStrength, protectorStrength) =
