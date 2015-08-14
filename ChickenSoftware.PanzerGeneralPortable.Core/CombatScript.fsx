@@ -24,8 +24,8 @@ let determineAttackGrade(attackingUnit: Unit, defendingUnit: Unit) =
         | _,_ -> attackGrade'
     attackGrade''
 
-let attackingUnit = getUnit(1)
-let defendingUnit = getUnit(1)
+let attackingUnit = getUnit(1).Value
+let defendingUnit = getUnit(1).Value
 determineAttackGrade(attackingUnit, defendingUnit)
 
 let isRuggedDefense(attackingUnit:Unit, defendingUnit:Unit, random: System.Random) =
@@ -91,7 +91,7 @@ let determineSubmarineAttackAdjustment(attackingUnit:Unit, defendingUnit:Unit) =
     | _, _ -> 0
 
 let determineTankAttackAntiTankDefenseAdjustment(attackingUnit:Unit, defendingUnit:Unit) = 
-    match isTank(attackingUnit.Equipment.EquipmentClass), isAntitank(defendingUnit.Equipment.EquipmentClass) with
+    match isTank(attackingUnit.Equipment.EquipmentClass), isAntiTank(defendingUnit.Equipment.EquipmentClass) with
     | true, true -> 99
     | _, _ -> 0
 

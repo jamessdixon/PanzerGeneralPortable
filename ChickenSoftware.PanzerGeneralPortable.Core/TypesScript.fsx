@@ -33,6 +33,9 @@ type CampaignTreeContext = XmlProvider<"../Data/campaignTree.xml">
 type CampaginTree = CampaignTreeContext.CampaignTree
 let campaignTrees = CampaignTreeContext.Parse(getXmlData("campaignTree"))
 
+type EquipmentContext = XmlProvider<"../Data/equipment.xml">
+let equipmentProvider = EquipmentContext.Parse(getXmlData("equipment"))
+
 type MovementCostContext = XmlProvider<"../Data/MovementCost.xml">
 type MovementCost = MovementCostContext.MovementCost
 let movementCosts = MovementCostContext.Parse(getXmlData("movementCost"))
@@ -116,7 +119,7 @@ type Side =
 | Neutral
 
 type Nation =
-| None
+| Neutral
 | AlliedForces
 | Bulgaria
 | France 
@@ -134,32 +137,32 @@ type Nation =
 
 let (|Neutral|Axis|Allied|) =
     function
-    | None -> Neutral
+    | Neutral -> Neutral
     | AlliedForces | France | Greece | UnitedStates | Norway | Poland | SovietUnion | GreatBritain -> Allied
     | Bulgaria | German | Hungray | Italy | Romania | Yugoslavia -> Axis
 
 let getNation(id:int) =
     match id with
-    | -1 -> None
-    | 2 -> AlliedForces
-    | 3 -> Bulgaria
-    | 7 -> France
-    | 8 -> German
-    | 9 -> Greece
-    | 10 -> UnitedStates
-    | 11 -> Hungray
-    | 13 -> Italy
-    | 15 -> Norway
-    | 16 -> Poland
-    | 18 -> Romania
-    | 20 -> SovietUnion
-    | 23 -> GreatBritain
-    | 24 -> Yugoslavia
+    | -1 -> Some Neutral
+    | 2 -> Some AlliedForces
+    | 3 -> Some Bulgaria
+    | 7 -> Some France
+    | 8 -> Some German
+    | 9 -> Some Greece
+    | 10 -> Some UnitedStates
+    | 11 -> Some Hungray
+    | 13 -> Some Italy
+    | 15 -> Some Norway
+    | 16 -> Some Poland
+    | 18 -> Some Romania
+    | 20 -> Some SovietUnion
+    | 23 -> Some GreatBritain
+    | 24 -> Some Yugoslavia
     | _ -> None
 
 let getNationImageCoordinates(nation:Nation) =
     match nation with
-    | None -> 0,0
+    | Neutral -> 0,0
     | AlliedForces -> 60,0
     | Bulgaria -> 120,0
     | France -> 360,0
@@ -174,7 +177,7 @@ let getNationImageCoordinates(nation:Nation) =
     | SovietUnion -> 1140,0
     | GreatBritain -> 1320,0
     | Yugoslavia -> 1380,0
-
+    | _ -> 0,0
 
 type TerrainType =
 | Ocean
@@ -235,7 +238,7 @@ type MovementType =
 | HalfTracked
 | Wheeled
 | Walk
-| None
+| Immovable
 | Airborne
 | Water
 | AllTerrain
@@ -243,7 +246,7 @@ type MovementType =
 let (|Motorized|UnMotorized|) =
     function
     | Tracked | HalfTracked | Wheeled | Airborne | Water | AllTerrain -> Motorized
-    | Walk | None -> UnMotorized
+    | Walk | Immovable -> UnMotorized
 
 let isMotorized = function 
 | Motorized -> true 
@@ -252,13 +255,11 @@ let isMotorized = function
 type Infantry =
 | Basic
 | Engineer
-| Pioniere
-| Airborne
 | Ranger
 | Bridging
 
 let isParadroppable = function 
-| Airborne | Ranger -> true 
+| Airborne  -> true 
 | _ -> false
 
 type Emplacement = 
@@ -298,7 +299,7 @@ type EquipmentClass =
 | Tank
 | Recon
 | Artillery of Cannon
-| Antitank of Cannon
+| AntiTank of Cannon
 | AirAttack of AirAttack
 | Emplacement of Emplacement
 | Fighter of Fighter
@@ -307,7 +308,7 @@ type EquipmentClass =
 | Transport of Transport
 
 let (|Towed|SelfPropelled|Static|) = function
-    | Artillery TowedLight | Artillery TowedHeavy | Antitank TowedLight | Antitank TowedHeavy | AirAttack(AirDefense TowedHeavy) | AirAttack(AirDefense TowedLight) -> Towed
+    | Artillery TowedLight | Artillery TowedHeavy | AntiTank TowedLight | AntiTank TowedHeavy | AirAttack(AirDefense TowedHeavy) | AirAttack(AirDefense TowedLight) -> Towed
     | Emplacement _ -> Static
     | _ -> SelfPropelled
 
@@ -328,9 +329,9 @@ let (|Ground|Air|Naval|) = function
     | Tank -> Ground Hard
     | Recon  -> Ground Soft
     | Artillery _ -> Ground Soft
-    | Antitank TowedLight -> Ground Soft 
-    | Antitank TowedHeavy -> Ground Soft 
-    | Antitank _ -> Ground Hard 
+    | AntiTank TowedLight -> Ground Soft 
+    | AntiTank TowedHeavy -> Ground Soft 
+    | AntiTank _ -> Ground Hard 
     | AirAttack _ -> Ground Soft
     | Emplacement _ -> Ground Soft
     | Transport GroundTransport -> Ground Soft
@@ -353,8 +354,8 @@ let isTank = function
 | Tank _ -> true
 | _ -> false
 
-let isAntitank = function
-| Antitank _ -> true
+let isAntiTank = function
+| AntiTank _ -> true
 | _ -> false
 
 let isAirAttack = function
@@ -386,14 +387,32 @@ let isCombat = function
 | _ -> false
 
 let canCaptureHexes = function
-| Infantry _ | Tank | Recon | Antitank _ -> true
+| Infantry _ | Tank | Recon | AntiTank _ -> true
 | _ -> false
      
 let isGroundCombat(equipmentClass: EquipmentClass) =
     isGround(equipmentClass) && isCombat(equipmentClass) 
 
+let getEntrenchmentRate(equipmentClass) = 
+    match equipmentClass with
+    | Infantry _  -> 3
+    | Tank -> 1
+    | Recon  -> 2
+    | Artillery _ -> 2
+    | AntiTank _ -> 2 
+    | AirAttack _ -> 2
+    | Emplacement _ -> 1
+    | Transport GroundTransport -> 2
+    | Fighter _ -> 0
+    | Bomber _ -> 0
+    | Transport AirTransport -> 0
+    | CombatShip _ -> 0
+    | Transport SeaTransport -> 0
+    | Transport AircraftCarrier -> 0
+
 type Equipment = {
     EquipmentId: int;
+    Nation: Nation;
     Description: string;
     EquipmentClass: EquipmentClass;
     MovementType: MovementType;

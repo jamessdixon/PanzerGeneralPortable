@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{FC986A07-6
 		Data\campaignTree.xml = Data\campaignTree.xml
 		Data\equipment.xml = Data\equipment.xml
 		Data\equipmentClass.xml = Data\equipmentClass.xml
+		Data\equipmentSubClass.xml = Data\equipmentSubClass.xml
 		Data\movementCost.xml = Data\movementCost.xml
 		Data\movementCostModifier.xml = Data\movementCostModifier.xml
 		Data\scenario.xml = Data\scenario.xml
