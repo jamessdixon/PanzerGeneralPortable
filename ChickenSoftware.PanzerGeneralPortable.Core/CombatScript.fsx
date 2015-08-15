@@ -1,9 +1,30 @@
 ﻿module CombatScript
 
-#load "TypesScript.fsx"
 #load "UnitScript.fsx"
-open TypeScript
 open UnitScript
+
+type Initative =
+| AttackerStrikesFirst
+| DefenderStrikesFirst
+| Simultanous
+
+type BattleInput = {
+    Tile: Tile; 
+    AggressorUnit: Unit; 
+    ProtectorUnit: Unit}
+
+type BattleOutcome =
+| AggressorHolds_ProtectorHolds
+| AggressorAdvances_ProtectorRetreats
+| AggressorAdvances_ProtectorDestroyed
+| AggressorDestroyed_ProtectorHolds
+| AggressorDestroyed_ProtectorDestroyed
+
+type VolleyOutcome =
+| AttackerHurt_DefenderUnhurt
+| AttackerHurt_DefenderHurt
+| AttackerUnhurt_DefenderUnhurt
+| AttackerUnhurt_DefenderHurt
 
 let isSurprised() =
     false
@@ -63,18 +84,24 @@ let determineEntrenchmentAmount(attackingUnit:Unit, defendingUnit:Unit) =
     | false, true, false -> defendingUnit.Entrenchment
 
 
-
-
+determineEntrenchmentAmount(attackingUnit00, defendingUnit01)
+determineEntrenchmentAmount(defendingUnit01, defendingUnit01)
 
 let determineGroundVNavalAdjustment(attackingUnit:Unit, defendingUnit:Unit) =
     match isGroundCombat(attackingUnit.Equipment.EquipmentClass), isNaval(defendingUnit.Equipment.EquipmentClass) with
     | true,true -> 8
     | _,_ -> 0
 
+let defendingUnit03 = getUnit(288).Value
+determineGroundVNavalAdjustment(attackingUnit00,defendingUnit03)
+
 let determineArtilleryVWetGroundAdjustment(attackingUnit:Unit, tile: Tile) =
     match isArtillery(attackingUnit.Equipment.EquipmentClass), isNotDry(tile.Condition) with
     | true, true -> 3
     | _ , _ -> 0
+
+let attackingUnit03 = getUnit(58).Value
+//let tile = {TileId=1; }
        
 let determineDefenseGrade(attackingUnit:Unit, defendingUnit:Unit, tile: Tile) =
     let defenseGrade =

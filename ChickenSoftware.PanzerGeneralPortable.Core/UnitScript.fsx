@@ -1,7 +1,239 @@
 ﻿module UnitScript
 
-#load "TypesScript.fsx"
-open TypeScript
+#load "GameScript.fsx"
+open GameScript
+
+type GroundTarget =
+| Soft
+| Hard
+
+type TargetType =
+| Ground of GroundTarget
+| Air
+| Naval
+
+type MovementType =
+| Tracked
+| HalfTracked
+| Wheeled
+| Walk
+| Immovable
+| Airborne
+| Water
+| AllTerrain
+
+let (|Motorized|UnMotorized|) =
+    function
+    | Tracked | HalfTracked | Wheeled | Airborne | Water | AllTerrain -> Motorized
+    | Walk | Immovable -> UnMotorized
+
+let isMotorized = function 
+| Motorized -> true 
+| UnMotorized -> false
+
+type Infantry =
+| Basic
+| Engineer
+| Ranger
+| Bridging
+
+let canParadrop = function 
+| Airborne  -> true 
+| _ -> false
+
+let canBridgeRivers = function
+| Bridging  -> true 
+| _ -> false
+
+type Emplacement = 
+| Fort
+| Strongpoint
+
+type Bomber =
+| Tactical
+| Strategic
+
+type Fighter =
+| Prop
+| Jet 
+
+type CombatShip =
+| Submarine
+| Destroyer
+| CapitalShip
+
+type Cannon =
+| TowedLight
+| TowedHeavy
+| SelfPropelled
+
+type AirAttack =
+| AirDefense of Cannon
+| AntiAir
+
+type Transport =
+| GroundTransport
+| AirTransport
+| SeaTransport
+| AircraftCarrier
+
+type EquipmentClass =
+| Infantry of Infantry
+| Tank
+| Recon
+| Artillery of Cannon
+| AntiTank of Cannon
+| AirAttack of AirAttack
+| Emplacement of Emplacement
+| Fighter of Fighter
+| Bomber of Bomber
+| CombatShip of CombatShip
+| Transport of Transport
+
+let (|Towed|SelfPropelled|Static|) = function
+    | Artillery TowedLight | Artillery TowedHeavy | AntiTank TowedLight | AntiTank TowedHeavy | AirAttack(AirDefense TowedHeavy) | AirAttack(AirDefense TowedLight) -> Towed
+    | Emplacement _ -> Static
+    | _ -> SelfPropelled
+
+let isTowed = function 
+| Towed -> true 
+| _ -> false
+
+let isSelfPropelled = function 
+| SelfPropelled -> true 
+| _ -> false
+
+let isStatic = function 
+| Static -> true 
+| _ -> false
+
+let (|Ground|Air|Naval|) = function
+    | Infantry _  -> Ground Soft
+    | Tank -> Ground Hard
+    | Recon  -> Ground Soft
+    | Artillery _ -> Ground Soft
+    | AntiTank TowedLight -> Ground Soft 
+    | AntiTank TowedHeavy -> Ground Soft 
+    | AntiTank _ -> Ground Hard 
+    | AirAttack _ -> Ground Soft
+    | Emplacement _ -> Ground Soft
+    | Transport GroundTransport -> Ground Soft
+    | Fighter _ -> Air
+    | Bomber _ -> Air
+    | Transport AirTransport -> Air
+    | CombatShip _ -> Naval
+    | Transport SeaTransport -> Naval
+    | Transport AircraftCarrier -> Naval
+
+let isInfantry = function
+| Infantry _  -> true
+| _ -> false
+
+let isArtillery = function
+| Artillery _ -> true
+| _ -> false
+
+let isTank = function
+| Tank _ -> true
+| _ -> false
+
+let isAntiTank = function
+| AntiTank _ -> true
+| _ -> false
+
+let isAirAttack = function
+| AirAttack _ -> true
+| _ -> false
+
+let isSubmarine = function
+| CombatShip Submarine -> true
+| _ -> false
+
+let isNaval = function
+| Naval -> true
+| _ -> false
+
+let isGround = function 
+| Ground _ -> true 
+| _ -> false
+
+let isAir = function 
+| Air -> true 
+| _ -> false
+
+let isTransport = function
+| Transport _  -> true
+| _ -> false
+
+let isCombat = function
+| Transport _  -> false
+| _ -> true
+
+let canCaptureHexes = function
+| Infantry _ | Tank | Recon | AntiTank _ -> true
+| _ -> false
+     
+let isGroundCombat(equipmentClass: EquipmentClass) =
+    isGround(equipmentClass) && isCombat(equipmentClass) 
+
+let getEntrenchmentRate(equipmentClass) = 
+    match equipmentClass with
+    | Infantry _  -> 3
+    | Tank -> 1
+    | Recon  -> 2
+    | Artillery _ -> 2
+    | AntiTank _ -> 2 
+    | AirAttack _ -> 2
+    | Emplacement _ -> 1
+    | Transport GroundTransport -> 2
+    | Fighter _ -> 0
+    | Bomber _ -> 0
+    | Transport AirTransport -> 0
+    | CombatShip _ -> 0
+    | Transport SeaTransport -> 0
+    | Transport AircraftCarrier -> 0
+
+type ImageCoordinate = int * int
+
+type Equipment = {
+    EquipmentId: int;
+    Nation: Nation;
+    Description: string;
+    EquipmentClass: EquipmentClass;
+    MovementType: MovementType;
+    HardAttack: int;
+    SoftAttack: int;
+    AirAttack: int;
+    NavalAttack: int;
+    EntrenchmentRate: int;
+    GroundDefense: int;
+    AirDefense: int;
+    CloseDefense: int;
+    IgnoreEntrenchment: bool;
+    Initative: int;
+    Range:int;
+    Spotting: int;
+    Movement: int;
+    MaxFuel:int;
+    MaxAmmo:int;
+    Cost:int;
+    StartService:System.DateTime;
+    EndService: System.DateTime;
+    FullImageCoordinate: ImageCoordinate;
+    StackedImageCoordinate: ImageCoordinate}
+
+type Unit = {
+    UnitId:int;
+    Nation: Nation;
+    Equipment: Equipment;
+    Experience: int;
+    BattleStars: int;
+    Ammo: int;
+    Fuel: int;
+    Entrenchment: int;
+    HitPoints: int;
+    AttackPoints: int;
+    IsSupressed: bool}
 
 let getEquipmentClass(id: int) =
     match id with

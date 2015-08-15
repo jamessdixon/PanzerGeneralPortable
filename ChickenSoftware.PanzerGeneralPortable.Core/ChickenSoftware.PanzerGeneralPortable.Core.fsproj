@@ -41,8 +41,10 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.Portable.FSharp.Targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <None Include="TypesScript.fsx" />
+    <None Include="ProviderScript.fsx" />
+    <None Include="GameScript.fsx" />
     <None Include="UnitScript.fsx" />
+    <None Include="TileScript.fsx" />
     <None Include="CombatScript.fsx" />
     <Content Include="packages.config" />
     <Content Include="app.config" />
