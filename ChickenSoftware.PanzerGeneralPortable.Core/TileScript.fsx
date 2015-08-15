@@ -1,6 +1,8 @@
 ﻿module TileScript
 
+#load "ProviderScript.fsx"
 #load "GameScript.fsx"
+open ProviderScript
 open GameScript
 
 type WeatherCondition =
@@ -14,7 +16,6 @@ type WeatherZone =
 | Mediterrian
 | WesternEurope
 | EasternEurope
-
 
 type TerrainType =
 | Ocean
@@ -31,6 +32,17 @@ type TerrainType =
 | Desert
 | RoughDesert
 | Escarpment
+
+type Terrain = {TerrainId:int; TerrainType: TerrainType; ImageCoordinate: ImageCoordinate}
+
+let isRiver(terrain:Terrain) =
+    false
+
+let isRoad(terrain:Terrain) =
+    false
+
+//let getTerrain(id: int) = 
+//    terrainProvider.
 
 let getTerrainTypeInititaiveCap = function
 | City -> 1

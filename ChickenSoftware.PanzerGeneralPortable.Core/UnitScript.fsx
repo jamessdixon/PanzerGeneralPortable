@@ -1,6 +1,9 @@
 ﻿module UnitScript
 
+#load "ProviderScript.fsx"
 #load "GameScript.fsx"
+
+open ProviderScript
 open GameScript
 
 type GroundTarget =
@@ -192,8 +195,6 @@ let getEntrenchmentRate(equipmentClass) =
     | CombatShip _ -> 0
     | Transport SeaTransport -> 0
     | Transport AircraftCarrier -> 0
-
-type ImageCoordinate = int * int
 
 type Equipment = {
     EquipmentId: int;

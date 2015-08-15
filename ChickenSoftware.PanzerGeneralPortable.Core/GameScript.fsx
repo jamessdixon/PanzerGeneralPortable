@@ -3,6 +3,8 @@
 #load "ProviderScript.fsx"
 open ProviderScript
 
+type ImageCoordinate = int * int
+
 type CampaignStepType =
 | MajorVictory
 | MinorVictory

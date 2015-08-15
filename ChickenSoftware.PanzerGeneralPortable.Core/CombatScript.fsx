@@ -1,7 +1,14 @@
 ﻿module CombatScript
 
+#load "ProviderScript.fsx"
+#load "GameScript.fsx"
 #load "UnitScript.fsx"
+#load "TileScript.fsx"
+
+open ProviderScript
+open GameScript
 open UnitScript
+open TileScript
 
 type Initative =
 | AttackerStrikesFirst
@@ -113,7 +120,7 @@ let determineDefenseGrade(attackingUnit:Unit, defendingUnit:Unit, tile: Tile) =
     let defenseGrade' = defenseGrade + defendingUnit.BattleStars
 
     let defenseGrade'' = 
-        match tile.Terrain.RiverInd with
+        match isRiver(tile.Terrain) with
         | true -> defenseGrade' + 4
         | false -> defenseGrade'
 
