@@ -24,12 +24,20 @@ let determineAttackGrade(attackingUnit: Unit, defendingUnit: Unit) =
         | _,_ -> attackGrade'
     attackGrade''
 
-let attackingUnit = getUnit(1).Value
-let defendingUnit = getUnit(1).Value
-determineAttackGrade(attackingUnit, defendingUnit)
+let attackingUnit00 = getUnit(45).Value
+let defendingUnit00 = getUnit(402).Value
+determineAttackGrade(attackingUnit00, defendingUnit00)
+
+let attackingUnit01 = {attackingUnit00 with Fuel=0}
+determineAttackGrade(attackingUnit01, defendingUnit00)
+
+let attackingUnit02 = {attackingUnit00 with BattleStars=5}
+determineAttackGrade(attackingUnit02, defendingUnit00)
 
 let isRuggedDefense(attackingUnit:Unit, defendingUnit:Unit, random: System.Random) =
-    match  isGround defendingUnit.Equipment.EquipmentClass, isCombat defendingUnit.Equipment.EquipmentClass with
+    let isGround = isGround defendingUnit.Equipment.EquipmentClass
+    let isCombat = isCombat defendingUnit.Equipment.EquipmentClass
+    match  isGround, isCombat with
     | true,true -> 
         let experienceRatio = (defendingUnit.Experience + 2) / (attackingUnit.Experience + 2);
         let entrenchmentRatio = (defendingUnit.Equipment.EntrenchmentRate + 1) / (attackingUnit.Equipment.EntrenchmentRate + 1)
@@ -37,6 +45,13 @@ let isRuggedDefense(attackingUnit:Unit, defendingUnit:Unit, random: System.Rando
         let roll = float (random.Next(100))
         ruggedDefenseChance > roll
     | _ -> false
+
+let random = new System.Random(42) //next = 66
+let defendingUnit01 = {defendingUnit00 with Experience=500; Entrenchment=10}
+isRuggedDefense(attackingUnit00, defendingUnit01, random)
+
+let defendingUnit02 = {defendingUnit00 with Experience=0; Entrenchment=0}
+isRuggedDefense(attackingUnit00, defendingUnit02, random)
 
 let determineEntrenchmentAmount(attackingUnit:Unit, defendingUnit:Unit) =
     match attackingUnit.Equipment.IgnoreEntrenchment, 
@@ -46,6 +61,10 @@ let determineEntrenchmentAmount(attackingUnit:Unit, defendingUnit:Unit) =
     | false, false, _ -> 0
     | false, true, true -> int(float defendingUnit.Entrenchment * 0.5)
     | false, true, false -> defendingUnit.Entrenchment
+
+
+
+
 
 let determineGroundVNavalAdjustment(attackingUnit:Unit, defendingUnit:Unit) =
     match isGroundCombat(attackingUnit.Equipment.EquipmentClass), isNaval(defendingUnit.Equipment.EquipmentClass) with

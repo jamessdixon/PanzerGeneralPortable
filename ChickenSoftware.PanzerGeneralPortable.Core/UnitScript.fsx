@@ -47,6 +47,12 @@ let getMovementType(id: int) =
     | 7 -> Some AllTerrain
     | _ -> None
 
+let getStartDate(month:int, year:int) =
+    new System.DateTime(1900+year,month,1)    
+
+let getEndDate(month:int, year:int) =
+    new System.DateTime(1900+year,month,28)    
+
 let getEquipment(id: int) =
     let equipment = equipmentProvider.Equipments |> Seq.find(fun e -> e.EquipmentId = id)
     let equipmentClass = getEquipmentClass(equipment.EquipmentSubClassId);
@@ -62,7 +68,14 @@ let getEquipment(id: int) =
         SoftAttack = equipment.SoftAttack; AirAttack = equipment.AirAttack;
         NavalAttack = equipment.NavalAttack; EntrenchmentRate=entrenchmentRate;
         GroundDefense=equipment.GroundDefense; AirDefense=equipment.AirDefense;
-        IgnoreEntrenchment=equipment.IgnoresEntrenchment; Initative=equipment.Initiative}
+        CloseDefense=equipment.CloseDefense; IgnoreEntrenchment=equipment.IgnoresEntrenchment; 
+        Initative=equipment.Initiative; Range=equipment.Range;
+        Spotting=equipment.Spotting; Movement=equipment.Movement;
+        MaxFuel=equipment.MaxFuel; MaxAmmo=equipment.MaxAmmo;
+        Cost=equipment.Cost; StartService=getStartDate(equipment.Month,equipment.Year);
+        EndService = getEndDate(equipment.Month, equipment.LastYear);
+        FullImageCoordinate = equipment.ImageXCoordinate, equipment.ImageYCoordinate;
+        StackedImageCoordinate = equipment.StackedImageXCoordinate, equipment.StackedImageYCoordinate;}
     | false -> None
 
 let getUnit(id: int) =
@@ -72,12 +85,14 @@ let getUnit(id: int) =
         Some {UnitId=id;
         Nation=equipment.Value.Nation;
         Equipment = equipment.Value;
-        Experience=100;
-        BattleStars=1;
-        Ammo=10;
-        Fuel=0;
-        Entrenchment=1;
-        HitPoints=60;
+        Experience=0;
+        BattleStars=0;
+        Ammo=equipment.Value.MaxAmmo;
+        Fuel=equipment.Value.MaxFuel;
+        Entrenchment=0;
+        HitPoints=10;
         AttackPoints=10;
         IsSupressed=false}
     | false -> None
+
+        

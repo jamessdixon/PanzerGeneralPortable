@@ -258,8 +258,12 @@ type Infantry =
 | Ranger
 | Bridging
 
-let isParadroppable = function 
+let canParadrop = function 
 | Airborne  -> true 
+| _ -> false
+
+let canBridgeRivers = function
+| Bridging  -> true 
 | _ -> false
 
 type Emplacement = 
@@ -384,7 +388,7 @@ let isTransport = function
 
 let isCombat = function
 | Transport _  -> false
-| _ -> false
+| _ -> true
 
 let canCaptureHexes = function
 | Infantry _ | Tank | Recon | AntiTank _ -> true
@@ -410,6 +414,8 @@ let getEntrenchmentRate(equipmentClass) =
     | Transport SeaTransport -> 0
     | Transport AircraftCarrier -> 0
 
+type ImageCoordinate = int * int
+
 type Equipment = {
     EquipmentId: int;
     Nation: Nation;
@@ -423,8 +429,19 @@ type Equipment = {
     EntrenchmentRate: int;
     GroundDefense: int;
     AirDefense: int;
+    CloseDefense: int;
     IgnoreEntrenchment: bool;
-    Initative: int}
+    Initative: int;
+    Range:int;
+    Spotting: int;
+    Movement: int;
+    MaxFuel:int;
+    MaxAmmo:int;
+    Cost:int;
+    StartService:System.DateTime;
+    EndService: System.DateTime;
+    FullImageCoordinate: ImageCoordinate;
+    StackedImageCoordinate: ImageCoordinate}
 
 type Unit = {
     UnitId:int;
