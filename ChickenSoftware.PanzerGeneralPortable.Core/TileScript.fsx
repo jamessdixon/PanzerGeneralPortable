@@ -41,9 +41,6 @@ let isRiver(terrain:Terrain) =
 let isRoad(terrain:Terrain) =
     false
 
-//let getTerrain(id: int) = 
-//    terrainProvider.
-
 let getTerrainTypeInititaiveCap = function
 | City -> 1
 | Forest | Fortification | Bocage-> 3
@@ -72,3 +69,12 @@ type Tile = {
     Terrain: Terrain; Condition: Condition;
     VictoryInd: bool;  SupplyInd: bool; 
     DeployInd: bool; MovementCost: int}
+
+let getTerrain(id: int) = 
+    let terrain = terrainProvider.Terrains |> Seq.find(fun t -> t.TerrainId = id)
+    {TerrainId=id; TerrainType=TerrainType.Ocean;ImageCoordinate = terrain.ImageXCoordinate, terrain.ImageYCoordinate}
+
+let getTile(id: int) =
+    {TileId=id; Nation=France;TileName="Test";ColumnNumber=0;RowNumber=0;
+    Terrain=getTerrain(1);Condition=Dry;VictoryInd=false;SupplyInd=false;
+    DeployInd=false;MovementCost=1}
