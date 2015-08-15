@@ -90,7 +90,6 @@ let determineEntrenchmentAmount(attackingUnit:Unit, defendingUnit:Unit) =
     | false, true, true -> int(float defendingUnit.Entrenchment * 0.5)
     | false, true, false -> defendingUnit.Entrenchment
 
-
 determineEntrenchmentAmount(attackingUnit00, defendingUnit01)
 determineEntrenchmentAmount(defendingUnit01, defendingUnit01)
 
@@ -108,7 +107,6 @@ let determineArtilleryVWetGroundAdjustment(attackingUnit:Unit, tile: Tile) =
     | _ , _ -> 0
 
 let attackingUnit03 = getUnit(58).Value
-//let tile = {TileId=1; }
        
 let determineDefenseGrade(attackingUnit:Unit, defendingUnit:Unit, tile: Tile) =
     let defenseGrade =
@@ -179,7 +177,6 @@ let calculateInitiative(attackingUnit:Unit, defendingUnit:Unit, terrainType: Ter
         | (ai, di) when ai > di -> AttackerStrikesFirst
         | (ai, di) when ai < di -> DefenderStrikesFirst
         | (_,_) -> Simultanous
-
 
 let determineVolleyEffect(attackingUnit:Unit, defendingUnit:Unit, rollResult: int) =
     let attackingUnit' = {attackingUnit with Experience =  attackingUnit.Experience + 1; Ammo = attackingUnit.Ammo - 1; AttackPoints = attackingUnit.AttackPoints - 1}

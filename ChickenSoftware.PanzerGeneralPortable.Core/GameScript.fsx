@@ -4,6 +4,7 @@
 open ProviderScript
 
 type ImageCoordinate = int * int
+type GameBoardCoordinate = int * int
 
 type CampaignStepType =
 | MajorVictory
