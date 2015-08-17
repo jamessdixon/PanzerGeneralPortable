@@ -140,7 +140,7 @@ let isDeployTile(tile: Tile) =
     tile.DeployTileInd
 
 let getTile(id: int) =
-    let tile = scenarioTileProvider.ScenarioTiles  |> Seq.find(fun t -> t.TerrainId = id)
+    let tile = scenarioTileProvider.ScenarioTiles  |> Seq.find(fun t -> t.ScenarioTileId = id)
     let terrain = getTerrain(tile.TerrainId)
     match terrain.IsSome with
     | true ->
@@ -150,3 +150,5 @@ let getTile(id: int) =
         Nation=nation.Value; GameBoardCoordinate=tile.ColumnNumber, tile.RowNumber;
         Terrain=terrain.Value;TerrainCondition=TerrainCondition.Dry}
     | false -> None
+
+getTile(1)

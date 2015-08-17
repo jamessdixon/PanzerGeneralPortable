@@ -95,19 +95,22 @@ determineEntrenchmentAmount(defendingUnit01, defendingUnit01)
 
 let determineGroundVNavalAdjustment(attackingUnit:Unit, defendingUnit:Unit) =
     match isGroundCombat(attackingUnit.Equipment.EquipmentClass), isNaval(defendingUnit.Equipment.EquipmentClass) with
-    | true,true -> 8
+    | true,true -> -8
     | _,_ -> 0
 
 let defendingUnit03 = getUnit(288).Value
 determineGroundVNavalAdjustment(attackingUnit00,defendingUnit03)
 
 let determineArtilleryVWetGroundAdjustment(attackingUnit:Unit, tile: Tile) =
-    match isArtillery(attackingUnit.Equipment.EquipmentClass), isNotDry(tile.Condition) with
-    | true, true -> 3
+    match isArtillery(attackingUnit.Equipment.EquipmentClass), isNotDry(tile.TerrainCondition) with
+    | true, true -> -3
     | _ , _ -> 0
 
 let attackingUnit03 = getUnit(58).Value
-       
+let tile00 = getTile(0).Value
+let tile01 = {tile00 with TerrainCondition=TerrainCondition.Muddy}
+determineArtilleryVWetGroundAdjustment(attackingUnit03,tile01)
+
 let determineDefenseGrade(attackingUnit:Unit, defendingUnit:Unit, tile: Tile) =
     let defenseGrade =
         match attackingUnit.Equipment.EquipmentClass with
@@ -122,7 +125,15 @@ let determineDefenseGrade(attackingUnit:Unit, defendingUnit:Unit, tile: Tile) =
         | true -> defenseGrade' + 4
         | false -> defenseGrade'
 
-    defenseGrade''
+    let defenseGrade''' = defenseGrade'' + determineEntrenchmentAmount(attackingUnit, defendingUnit)
+                                         + determineGroundVNavalAdjustment(attackingUnit, defendingUnit)
+                                         + determineArtilleryVWetGroundAdjustment(attackingUnit, tile)
+    defenseGrade'''
+
+determineDefenseGrade(attackingUnit00, defendingUnit00, tile00)
+determineDefenseGrade(attackingUnit01, defendingUnit01, tile00)
+determineDefenseGrade(attackingUnit00, defendingUnit03, tile00)
+determineDefenseGrade(attackingUnit03, defendingUnit03, tile01)
 
 let determineInitativeCap(equipmentInitative, terrainInitiative) =
     match equipmentInitative < terrainInitiative with
@@ -140,6 +151,7 @@ let determineSubmarineAttackAdjustment(attackingUnit:Unit, defendingUnit:Unit) =
     match(isSubmarine(attackingUnit.Equipment.EquipmentClass), isNaval(defendingUnit.Equipment.EquipmentClass)) with
     | true, true -> 99
     | _, _ -> 0
+
 
 let determineTankAttackAntiTankDefenseAdjustment(attackingUnit:Unit, defendingUnit:Unit) = 
     match isTank(attackingUnit.Equipment.EquipmentClass), isAntiTank(defendingUnit.Equipment.EquipmentClass) with
