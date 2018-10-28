@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
+    <Folder Include="Data\" />
+    <Folder Include="Sounds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <Compile Include="MainPage.xaml.fs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="App.xaml" />
+    <Compile Include="App.xaml.fs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Support.fs" />
+    <None Include="Sounds\air.wav" />
+    <None Include="Sounds\explode.wav" />
+    <None Include="Sounds\jet.wav" />
+    <None Include="Sounds\leg.wav" />
+    <None Include="Sounds\naval.wav" />
+    <None Include="Sounds\tracked.wav" />
+    <None Include="Sounds\wheeled.wav" />
+    <PackageReference Include="FSharp.Core" Version="4.3.3" />
+    <PackageReference Include="Xamarin.Forms" Version="3.0.0.482510" />
+    <None Include="Images\explode.png" />
+    <None Include="Images\flags.png" />
+    <None Include="Images\hexsides.png" />
+    <None Include="Images\stackicn.png" />
+    <None Include="Images\strength.png" />
+    <None Include="Images\tacicons.png" />
+    <None Include="Images\tacmap_dry.png" />
+    <None Include="Images\tacmap_frozen.png" />
+    <None Include="Images\tacmap_muddy.png" />
+    <None Include="Data\Campaign_Briefing.xml" />
+    <None Include="Data\Campaign_Step.xml" />
+    <None Include="Data\Campaign_StepType.xml" />
+    <None Include="Data\Campaign_Tree.xml" />
+    <None Include="Data\Campaign.xml" />
+    <None Include="Data\Equipment.xml" />
+    <None Include="Data\EquipmentClass.xml" />
+    <None Include="Data\EquipmentGroup.xml" />
+    <None Include="Data\EquipmentLossCalculationGroup.xml" />
+    <None Include="Data\EquipmentSubClass.xml" />
+    <None Include="Data\MovementCost.xml" />
+    <None Include="Data\MovementCostModifier.xml" />
+    <None Include="Data\MovementType.xml" />
+    <None Include="Data\Nation.xml" />
+    <None Include="Data\ObjectiveType.xml" />
+    <None Include="Data\Scenario_ClassPurchase.xml" />
+    <None Include="Data\Scenario_Nation.xml" />
+    <None Include="Data\Scenario_PrestigeAllotment.xml" />
+    <None Include="Data\Scenario_Side.xml" />
+    <None Include="Data\Scenario_Tile.xml" />
+    <None Include="Data\Scenario_Unit.xml" />
+    <None Include="Data\Scenario.xml" />
+    <None Include="Data\Side.xml" />
+    <None Include="Data\TargetType.xml" />
+    <None Include="Data\Terrain.xml" />
+    <None Include="Data\TerrainCondition.xml" />
+    <None Include="Data\TerrainGroup.xml" />
+    <None Include="Data\TerrainType.xml" />
+    <None Include="Data\TileName.xml" />
+    <None Include="Data\VictoryCondition_Campaign.xml" />
+    <None Include="Data\VictoryCondition_StandAlone.xml" />
+    <None Include="Data\Weather.xml" />
+    <None Include="Data\WeatherProbability.xml" />
+    <None Include="Data\WeatherZone.xml" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>
